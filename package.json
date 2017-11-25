@@ -46,5 +46,8 @@
     "test": "test",
     "src": "src",
     "lib": "src"
-  }
+  },
+  "contributors": [
+    "mkg20001 <mkg20001@gmail.com>"
+  ]
 }
