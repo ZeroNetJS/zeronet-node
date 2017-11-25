@@ -37,5 +37,13 @@
     "zeronet-fileserver": "file:../zeronet-fileserver",
     "zeronet-swarm": "file:../zeronet-swarm",
     "zeronet-zite": "file:../zeronet-zite"
+  },
+  "devDependencies": {
+    "aegir": "^12.2.0"
+  },
+  "directories": {
+    "test": "test",
+    "src": "src",
+    "lib": "src"
   }
 }
