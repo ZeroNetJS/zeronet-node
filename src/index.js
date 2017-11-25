@@ -1,38 +1,38 @@
-"use strict"
+'use strict'
 
-const Swarm = require("zeronet-swarm")
+const Swarm = require('zeronet-swarm')
 
-const debug = require("debug")
-const log = debug("zeronet:node")
+const debug = require('debug')
+const log = debug('zeronet:node')
 const series = require('async/series')
-const uuid = require("uuid")
+const uuid = require('uuid')
 
-const PeerPool = require("zeronet-common/lib/peer/pool").MainPool
-const TrackerManager = require("zeronet-common/lib/tracker/manager")
-const ZiteManager = require("zeronet-zite/lib/manager")
-const FileServer = require("zeronet-fileserver")
+const PeerPool = require('zeronet-common/src/peer/pool').MainPool
+const TrackerManager = require('zeronet-common/src/tracker/manager')
+const ZiteManager = require('zeronet-zite/src/manager')
+const FileServer = require('zeronet-fileserver')
 
-const StorageWrapper = require("zeronet-common/lib/storage/wrapper") //wraps a storage into a more usable api
-const assert = require("assert")
+const StorageWrapper = require('zeronet-common/src/storage/wrapper') // wraps a storage into a more usable api
+const assert = require('assert')
 
 /**
  * ZeroNet full-node
  * @param {object} options
  * @namespace ZeroNetNode
+ * @returns {ZeroNetNode} ZeroNet Node
  * @constructor
  */
-function ZeroNetNode(options) {
-
+function ZeroNetNode (options) {
   if (!options) options = {}
   if (!options.modules) options.modules = {}
   if (!options.swarm) options.swarm = {}
 
   options.swarm.id = options.id
 
-  assert(options.storage, "no zeronet storage given")
-  assert(options.id, "no id given")
+  assert(options.storage, 'no zeronet storage given')
+  assert(options.id, 'no id given')
 
-  log("creating a new node", process.env.INTENSE_DEBUG ? options : {
+  log('creating a new node', process.env.INTENSE_DEBUG ? options : {
     id: options.id.toB58String(),
     storage: options.storage.constructor.name,
     common: options.common,
@@ -45,7 +45,7 @@ function ZeroNetNode(options) {
   const storage = self.storage = new StorageWrapper(options.storage)
   const common = self.zeronet = options.common || false
 
-  self.version = "0.5.6" //TODO: those are all fake. use real ones.
+  self.version = '0.5.6' // TODO: those are all fake. use real ones.
   self.rev = 2109
 
   if (common) {
@@ -57,13 +57,13 @@ function ZeroNetNode(options) {
       @return {Logger}
       */
     self.logger = prefix => {
-      const d = debug("zeronet:" + prefix)
+      const d = debug('zeronet:' + prefix)
       d.info = d
       d.trace = d
       d.debug = d
-      d.warn = debug("zeronet:" + prefix + ":warn")
-      d.error = debug("zeronet:" + prefix + ":error")
-      d.fatal = debug("zeronet:" + prefix + ":fatal")
+      d.warn = debug('zeronet:' + prefix + ':warn')
+      d.error = debug('zeronet:' + prefix + ':error')
+      d.fatal = debug('zeronet:' + prefix + ':fatal')
       return d
     }
   }
@@ -75,14 +75,14 @@ function ZeroNetNode(options) {
   const uiserver = self.uiserver = options.uiserver ? new UiServer(options.uiserver, self) : false
   const nat = self.nat = options.nat ? new NAT(swarm, options.swarm) : false
 
-  const logger = self.logger("node")
+  const logger = self.logger('node')
 
-  //-ZNXXXX- 8 chars + 12 chars random
-  self.peer_id = "-ZN" + ("0" + self.version.replace(/\./g, "")) + "-" + uuid().replace(/-/g, "").substr(0, 12)
+  // -ZNXXXX- 8 chars + 12 chars random
+  self.peer_id = '-ZN' + ('0' + self.version.replace(/\./g, '')) + '-' + uuid().replace(/-/g, '').substr(0, 12)
 
-  logger("ZeroNet v[alpha] with peer_id %s", self.peer_id)
+  logger('ZeroNet v[alpha] with peer_id %s', self.peer_id)
 
-  if (!options.swarm.zero || !options.swarm.zero.crypto || !options.swarm.zero.crypto.length) logger.warn("CRYPTO DISABLED! ALL COMMUNICATION IS IN PLAINTEXT!")
+  if (!options.swarm.zero || !options.swarm.zero.crypto || !options.swarm.zero.crypto.length) logger.warn('CRYPTO DISABLED! ALL COMMUNICATION IS IN PLAINTEXT!')
 
   const pool = self.peerPool = new PeerPool(swarm)
   self.trackers = new TrackerManager(options.swarm.zero.trackers, self)
@@ -97,28 +97,30 @@ function ZeroNetNode(options) {
 
   /**
     Starts the node
-    @param {callback} callback
+    @param {callback} cb
+    @returns {undefined}
     */
-  self.start = cb => series([ //loads all the stuff from disk and starts everything
+  self.start = cb => series([ // loads all the stuff from disk and starts everything
     storage.start,
     self.boot,
     cb => swarm.start(cb),
     ziteManager.start,
-    cb => sintv = setInterval(self.save, 10 * 1000, cb()), //TODO: "make this great again"
+    cb => (sintv = setInterval(self.save, 10 * 1000, cb())), // TODO: "make this great again"
     uiserver ? uiserver.start : cb => cb(),
     options.nat ? nat.doDefault : cb => cb()
   ], cb)
 
   /**
     Loads the config from disk (already done by start)
-    @param {callback} callback
+    @param {callback} cb
+    @returns {undefined}
     */
   self.boot = cb => series([
-    cb => storage.getJSON("peers", [], (err, res) => {
+    cb => storage.getJSON('peers', [], (err, res) => {
       if (err) return cb(err)
       pool.fromJSON(res, cb)
     }),
-    cb => storage.getJSON("zites", [], (err, res) => {
+    cb => storage.getJSON('zites', [], (err, res) => {
       if (err) return cb(err)
       ziteManager.fromJSON(res, cb)
     })
@@ -126,16 +128,17 @@ function ZeroNetNode(options) {
 
   /**
     Saves the config to disk
-    @param {callback} callback
+    @param {callback} cb
+    @returns {undefined}
     */
-  self.save = cb => { //save to disk
-    log("saving to disk")
+  self.save = cb => { // save to disk
+    log('saving to disk')
     const s = new Date().getTime()
     series([
-      cb => storage.setJSON("peers", pool.toJSON(), cb),
-      cb => storage.setJSON("zites", ziteManager.toJSON(), cb)
+      cb => storage.setJSON('peers', pool.toJSON(), cb),
+      cb => storage.setJSON('zites', ziteManager.toJSON(), cb)
     ], err => {
-      log("saved in %sms", new Date().getTime() - s)
+      log('saved in %sms', new Date().getTime() - s)
       if (err) log(err)
       if (cb) cb(err)
     })
@@ -143,21 +146,21 @@ function ZeroNetNode(options) {
 
   /**
     Stops the node
-    @param {callback} callback
+    @param {callback} cb
+    @returns {undefined}
     */
   self.stop = cb => {
     series([
       uiserver ? uiserver.stop : cb => cb(),
       ziteManager.stop,
       self.save,
-      cb => sintv = clearInterval(sintv, cb()), //TODO: "make this great again"
+      cb => (sintv = clearInterval(sintv, cb())), // TODO: "make this great again"
       cb => swarm.stop(cb),
       storage.stop
     ], cb)
   }
 
   FileServer(swarm.protocol, self)
-
 }
 
 module.exports = ZeroNetNode

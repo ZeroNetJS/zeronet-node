@@ -33,13 +33,14 @@
     "async": "^2.6.0",
     "clone": "^2.1.1",
     "uuid": "^3.1.0",
-    "zeronet-common": "file:../zeronet-common",
-    "zeronet-fileserver": "file:../zeronet-fileserver",
-    "zeronet-swarm": "file:../zeronet-swarm",
-    "zeronet-zite": "file:../zeronet-zite"
+    "zeronet-common": "^0.2.1",
+    "zeronet-fileserver": "^0.0.6",
+    "zeronet-swarm": "^0.0.2",
+    "zeronet-zite": "^0.0.4"
   },
   "devDependencies": {
-    "aegir": "^12.2.0"
+    "aegir": "^12.2.0",
+    "zeronet-storage-memory": "0.0.1"
   },
   "directories": {
     "test": "test",
