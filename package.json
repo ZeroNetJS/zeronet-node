@@ -35,7 +35,7 @@
     "uuid": "~3.1.0",
     "zeronet-common": "~0.2.1",
     "zeronet-fileserver": "~0.0.6",
-    "zeronet-swarm": "~0.0.2",
+    "zeronet-swarm": "~0.1.0",
     "zeronet-zite": "~0.0.4"
   },
   "devDependencies": {
