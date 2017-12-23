@@ -9,7 +9,7 @@
     "build": "aegir build",
     "test:node": "aegir test -t node",
     "test:browser": "aegir test -t browser",
-    "release": "aegir release",
+    "release": "aegir release -t node",
     "release-minor": "aegir release --type minor",
     "release-major": "aegir release --type major",
     "coverage": "aegir coverage",
@@ -35,11 +35,11 @@
     "uuid": "~3.1.0",
     "zeronet-common": "~0.2.1",
     "zeronet-fileserver": "~0.0.6",
-    "zeronet-swarm": "~0.1.0",
+    "zeronet-swarm": "~0.1.2",
     "zeronet-zite": "~0.0.4"
   },
   "devDependencies": {
-    "aegir": "^12.2.0",
+    "aegir": "^12.3.0",
     "zeronet-storage-memory": "0.0.1"
   },
   "directories": {
