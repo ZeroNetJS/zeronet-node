@@ -29,7 +29,7 @@ module.exports = function StorageWrapper (storage) {
   /* files */
 
   self.exists = storage.file.exists
-  
+
   self.readStream = (zite, v, path) => {
     if (storage.file.readStream) {
       const d = defer.source()
