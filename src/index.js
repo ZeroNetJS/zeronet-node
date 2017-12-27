@@ -8,11 +8,11 @@ const series = require('async/series')
 const uuid = require('uuid')
 
 const PeerPool = require('zeronet-common/src/peer/pool').MainPool
-const TrackerManager = require('zeronet-common/src/tracker/manager')
+const TrackerManager = require('./tracker/manager')
 const ZiteManager = require('zeronet-zite/src/manager')
 const FileServer = require('zeronet-fileserver')
 
-const StorageWrapper = require('zeronet-common/src/storage/wrapper') // wraps a storage into a more usable api
+const StorageWrapper = require('./storage/wrapper') // wraps a storage into a more usable api
 const assert = require('assert')
 
 /**

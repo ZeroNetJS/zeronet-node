@@ -31,12 +31,14 @@
   "homepage": "https://github.com/ZeroNetJS/zeronet-node#readme",
   "dependencies": {
     "async": "^2.6.0",
+    "zeronet-tracker": "~0.1.0",
     "clone": "^2.1.1",
+    "hypercache": "^0.2.0",
     "uuid": "^3.1.0",
-    "zeronet-common": "~0.2.1",
-    "zeronet-fileserver": "0.0.6",
-    "zeronet-swarm": "~0.1.2",
-    "zeronet-zite": "0.0.4"
+    "zeronet-common": "~0.3.0",
+    "zeronet-fileserver": "0.0.7",
+    "zeronet-swarm": "~0.1.4",
+    "zeronet-zite": "0.0.5"
   },
   "devDependencies": {
     "aegir": "^12.3.0",
