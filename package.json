@@ -9,7 +9,7 @@
     "build": "aegir build",
     "test:node": "aegir test -t node",
     "test:browser": "aegir test -t browser",
-    "release": "aegir release",
+    "release": "aegir release -t node",
     "release-minor": "aegir release --type minor",
     "release-major": "aegir release --type major",
     "coverage": "aegir coverage",
