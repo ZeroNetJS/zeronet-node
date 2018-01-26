@@ -1,3 +1,13 @@
+<a name="0.0.6"></a>
+## [0.0.6](https://github.com/ZeroNetJS/zeronet-node/compare/v0.0.5...v0.0.6) (2018-01-26)
+
+
+### Features
+
+* .swarmModules opt ([daf3edc](https://github.com/ZeroNetJS/zeronet-node/commit/daf3edc))
+
+
+
 <a name="0.0.5"></a>
 ## [0.0.5](https://github.com/ZeroNetJS/zeronet-node/compare/v0.0.4...v0.0.5) (2018-01-26)
 
