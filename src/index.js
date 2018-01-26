@@ -26,6 +26,7 @@ function ZeroNetNode (options) {
   if (!options) options = {}
   if (!options.modules) options.modules = {}
   if (!options.swarm) options.swarm = {}
+  if (!options.swarmModules) options.swarmModules = []
 
   options.swarm.id = options.id
 
@@ -71,7 +72,7 @@ function ZeroNetNode (options) {
   const UiServer = options.modules.uiserver
   const NAT = options.modules.nat
 
-  const swarm = self.swarm = new Swarm(options.swarm, self)
+  const swarm = self.swarm = new Swarm(options.swarm, self, options.swarmModules)
   const uiserver = self.uiserver = options.uiserver ? new UiServer(options.uiserver, self) : false
   const nat = self.nat = options.nat ? new NAT(swarm, options.swarm) : false
 
