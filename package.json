@@ -38,7 +38,7 @@
     "zeronet-common": "~0.3.0",
     "zeronet-fileserver": "0.0.8",
     "zeronet-swarm": "~0.2.1",
-    "zeronet-zite": "0.0.6"
+    "zeronet-zite": "0.0.7"
   },
   "devDependencies": {
     "aegir": "^13.0.5",
