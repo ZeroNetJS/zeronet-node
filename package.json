@@ -1,6 +1,6 @@
 {
   "name": "zeronet-node",
-  "version": "0.0.7",
+  "version": "0.0.8",
   "description": "ZeroNet full node",
   "main": "src/index.js",
   "scripts": {
